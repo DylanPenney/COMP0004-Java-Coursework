@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet({"/test.html"})
+@WebServlet({"/runsearch.html"})
 public class searchServlet extends HttpServlet {
     public searchServlet() {
     }
