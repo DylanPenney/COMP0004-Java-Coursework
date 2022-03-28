@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import ucl.ac.uk.Model.Model;
 import ucl.ac.uk.Model.ModelFactory;
 
-@WebServlet({"/notesList.html"})
-public class viewNotesListServlet extends HttpServlet {
-    public viewNotesListServlet() {
+@WebServlet("/viewNote.html")
+public class viewNoteServlet extends HttpServlet{
+    public viewNoteServlet() {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -25,4 +25,5 @@ public class viewNotesListServlet extends HttpServlet {
         RequestDispatcher dispatch = context.getRequestDispatcher("/notesList.jsp");
         dispatch.forward(request, response);
     }
+
 }

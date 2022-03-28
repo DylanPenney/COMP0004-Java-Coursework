@@ -4,23 +4,22 @@
 <html>
 <head>
     <jsp:include page="/meta.jsp"/>
-    <title>COMP0004-Coursework</title>
 </head>
 <body>
 <jsp:include page="/header.jsp"/>
 <div class="main">
     <h1>Search Result</h1>
     <%
-    List<String> patients = (List<String>) request.getAttribute("result");
-    if (patients.size() !=0)
+    List<String> notes = (List<String>) request.getAttribute("result");
+    if (notes.size() !=0)
     {
     %>
     <ul>
         <%
-        for (String patient : patients)
+        for (String note : notes)
         {
         %>
-        <li><%=patient%></li>
+        <li><a href="/note"><%=note%></a></li>
         <% }
         } else
         {%>

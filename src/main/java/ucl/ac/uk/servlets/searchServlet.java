@@ -1,9 +1,16 @@
 package ucl.ac.uk.servlets;
 
+import ucl.ac.uk.Model.Model;
+import ucl.ac.uk.Model.ModelFactory;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,37 +21,17 @@ public class searchServlet extends HttpServlet {
     public searchServlet() {
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
+        // Use the model to do the search and put the results into the request object sent to the
+        // Java Server Page used to display the results.
+        Model model = ModelFactory.getModel();
+        List<String> searchResult = model.searchFor(request.getParameter("searchstring"));
+        request.setAttribute("result", searchResult);
 
-        try {
-            new Date();
-            new SimpleDateFormat("E yyyy.MM.dd 'at' hh:mm:ss a zzz");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<meta charset=\"UTF-8\">");
-            out.println("<title>COMP0004 Coursework</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h6>Page Content</h6>");
-            out.println("</body>");
-            out.println("</html");
-        } catch (Throwable var7) {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (Throwable var6) {
-                    var7.addSuppressed(var6);
-                }
-            }
-
-            throw var7;
-        }
-
-        if (out != null) {
-            out.close();
-        }
-
+        // Invoke the JSP page.
+        ServletContext context = getServletContext();
+        RequestDispatcher dispatch = context.getRequestDispatcher("/searchResult.jsp");
+        dispatch.forward(request, response);
     }
 }
