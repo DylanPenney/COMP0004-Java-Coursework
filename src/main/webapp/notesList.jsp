@@ -12,14 +12,26 @@
   <ul>
     <%
       List<String> notes = (List<String>) request.getAttribute("noteNames");
-      for (String note : notes)
-      {
-        String href = "note.html";
-        %>
-        <li><a href="<%=href%>"><%=note%></a></li>
-   <% } %>
-  </ul>
-</div>
+      if (notes.size() !=0)
+          {
+          %>
+          <ul>
+              <%
+                  for (String note : notes)
+                  {
+                  %>
+                  <li>
+                      <form action="viewNote.html" method="GET">
+                          <input type="submit" value="<%=note%>" name = "currentNote"/>
+                      </form>
+                  </li>
+                  <% }
+                  } else
+                  {%>
+                  <p>Nothing found</p>
+              <%}%>
+          </ul>
+      </div>
 <jsp:include page="/footer.jsp"/>
 </body>
 </html>

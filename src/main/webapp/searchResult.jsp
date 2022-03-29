@@ -7,7 +7,7 @@
 </head>
 <body>
 <jsp:include page="/header.jsp"/>
-<div class="main">
+<div id="main">
     <h1>Search Result</h1>
     <%
     List<String> notes = (List<String>) request.getAttribute("result");
@@ -19,7 +19,11 @@
         for (String note : notes)
         {
         %>
-        <li><a href="/note"><%=note%></a></li>
+        <li>
+            <form action="viewNote.html" method="GET">
+                <input type="submit" value="<%=note%>" name = "currentNote"/>
+            </form>
+        </li>
         <% }
         } else
         {%>

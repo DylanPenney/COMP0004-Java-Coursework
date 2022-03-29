@@ -4,9 +4,6 @@ import ucl.ac.uk.Model.Model;
 import ucl.ac.uk.Model.ModelFactory;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;

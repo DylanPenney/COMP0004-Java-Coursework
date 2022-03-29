@@ -1,7 +1,8 @@
 package ucl.ac.uk.servlets;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -19,10 +20,15 @@ public class viewNoteServlet extends HttpServlet{
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Model model = ModelFactory.getModel();
-        List<String> notes = model.getNoteNames();
-        request.setAttribute("noteNames", notes);
+        String note = request.getQueryString();
+        note = note.substring(12);
+        note = note.replaceAll("[^a-zA-Z0-9]","").replace(" ", "");
+        File f = new File("./data/"+note+".txt");
+        ArrayList<String> contents = model.readFile(f);
+        request.setAttribute("body", contents);
+
         ServletContext context = this.getServletContext();
-        RequestDispatcher dispatch = context.getRequestDispatcher("/notesList.jsp");
+        RequestDispatcher dispatch = context.getRequestDispatcher("/viewNote.jsp");
         dispatch.forward(request, response);
     }
 

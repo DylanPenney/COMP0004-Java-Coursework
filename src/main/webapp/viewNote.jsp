@@ -1,26 +1,40 @@
+<%@ page import="java.util.ArrayList" %>
 <html>
-<head>
-    <jsp:include page="/meta.jsp"/>
-</head>
-<body>
-    <jsp:include page="/header.jsp"/>
-    <div class = "main">
-        <h1></h1>
+    <head>
+        <jsp:include page="/meta.jsp"/>
+    </head>
+    <body>
+        <jsp:include page="/header.jsp"/>
+        <div class = "main">
             <%
-            List<String> notes = (List<String>) request.getAttribute("result");
-            if (notes.size() !=0)
-            {
+                String noteName = (String) request.getAttribute("currentNote");
+                if (noteName == null){
+                    noteName = (String) request.getQueryString().substring(12);
+                }
+                ArrayList<String> contents = (ArrayList<String>) request.getAttribute("body");
             %>
-            <ul>
+            <h1><%=noteName%></h1>
+            <div class="content">
                 <%
-                for (String note : notes)
-                {
+                    if (contents != null) {
                 %>
-                <li><a href="./data/basic.txt"><%=note%></a></li>
-                <% }
-                } else
-                {%>
-                <p>Nothing found</p>
-                <%}%>
-            </ul>
-    </div>
+                    <form action="/save.html" method="POST">
+                        <input type="hidden" name="noteName" value="<%=noteName%>"/>
+                        <textarea name="mainContent"><%=String.join(" ", contents)%></textarea>
+                        <input type ="submit" value="Save">
+                    </form>
+                <%
+                    } else {
+                %>
+                    <form action="/save.html" method="POST">
+                        <textarea name="mainContent" style="resize:none;"></textarea>
+                        <input type = "submit" value="Save">
+                    </form>
+                <%
+                   }
+                %>
+            </div>
+        </div>
+        <jsp:include page="/footer.jsp"/>
+    </body>
+</html>
