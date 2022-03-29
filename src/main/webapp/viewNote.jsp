@@ -27,12 +27,22 @@
                     } else {
                 %>
                     <form action="/save.html" method="POST">
-                        <textarea name="mainContent" style="resize:none;"></textarea>
-                        <input type = "submit" value="Save">
+                        <input type="hidden" name="noteName" value="<%=noteName%>"/>
+                        <textarea name="mainContent"><%=String.join(" ", contents)%></textarea>
+                        <input type ="submit" value="Save">
                     </form>
                 <%
                    }
                 %>
+                    <form action="/delete.html" method="POST">
+                        <input type="hidden" name="noteName" value="<%=noteName%>"/>
+                        <input type="submit" value="DELETE">
+                    </form>
+                    <form action="/rename.html" method="POST">
+                        <input type="hidden" name="noteName" value="<%=noteName%>"/>
+                        <input type="text" spellcheck="false" name="newFileName" placeholder="Enter new file name here"/>
+                        <input type="submit" value="RENAME">
+                    </form>
             </div>
         </div>
         <jsp:include page="/footer.jsp"/>

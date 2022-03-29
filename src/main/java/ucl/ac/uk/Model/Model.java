@@ -44,9 +44,62 @@ public class Model {
 
         File f2 = new File("./data/"+noteName+".txt");
         FileWriter fw2 = new FileWriter(f2, false);
-        //fw2.write("test");
+        fw2.write("");
         fw2.close();
         return noteName;
+    }
+
+    public void delete(String noteName) throws IOException {
+        noteName = noteName.replaceAll("[^a-zA-Z0-9]","").replace(" ", "");
+        File file = new File("./data/notes.csv");
+        File newFile = new File("./data/temp.csv");
+        FileWriter temp = new FileWriter("./data/temp.csv", false);
+
+        temp.write("ID,NAME,CREATED,FILEPATH");
+
+        Scanner sc = null;
+        try {
+            sc = new Scanner(file);
+            while (sc.hasNextLine()){
+                String line = sc.nextLine();
+                if (line.equals("ID,NAME,CREATED,FILEPATH") == false){
+                    List<String> items = List.of(line.split(","));
+                    if (noteName.equals(items.get(1)) == false){
+                        // If the line is to be kept
+                        temp.write("\n" + line);
+                    }
+                }
+            }
+            temp.close(); // temp.csv is now a duplicate of notes.csv without the line to be deleted
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // Now to make notes.csv a copy of temp.csv
+        newFile.renameTo(file);
+
+        // to delete the text file associated with noteName
+        File toBeDeleted = new File("./data/"+ noteName+".txt");
+        toBeDeleted.delete();
+    }
+
+    public void rename(String noteName, String newName) throws IOException {
+        newName = newName.replaceAll("[^a-zA-Z0-9]","").replace(" ", "");
+        if (newName.equals("") == false){
+            // Rename the entry in the index
+            String temp = create(newName);
+
+            // 'Rename' the .txt file
+            String oldFileDir = "./data/"+noteName+".txt";
+            String newFileDir = "./data/"+newName+".txt";
+            File oldFile = new File(oldFileDir);
+            File newFile = new File(newFileDir);
+
+            oldFile.renameTo(newFile);
+
+            // Delete old file
+            delete(noteName);
+        }
     }
 
     public List<String> getNoteNames() {
@@ -55,6 +108,7 @@ public class Model {
         ArrayList<String> noteNames = new ArrayList<String>();
 
         contents.remove(contents.get(0));
+
         if (contents.size() > 0) {
             for (String s : contents) {
                 List<String> items = List.of(s.split(","));
