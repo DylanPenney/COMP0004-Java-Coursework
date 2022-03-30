@@ -1,4 +1,5 @@
 # COMP0004-Coursework
+
 Firstly, for the first requirement my program can store multiple notes, each which has a name and can hold text. The second requirement consists of the 
 index, which my program implements – my program displays a ‘index’ of created notes, and each note can be clicked, which would then take user to the 
 individual note’s page. Each note’s page allows the user to delete, rename or edit the selected note. When a note is created it is added to the index and 
